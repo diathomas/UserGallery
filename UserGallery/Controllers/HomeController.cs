@@ -91,8 +91,10 @@ namespace UserGallery.Controllers
 
         public ActionResult UserDetails(int Id)
         {
-            
-          return View(GetDetails("users/",Id));
+            var userdetails = GetDetails("users/", Id);
+            var userphotos = GetDetails("posts/", Id);
+            userdetails.Body = userphotos.Body;
+            return View(userdetails);
                 
         }
 

@@ -14,5 +14,6 @@ namespace UserGallery.Models
         public Address address { get; set; }
         public string Title { get; set; }
         public string ThumbnailUrl { get; set; }
+        public string Body { get; set; }
     }
 }
