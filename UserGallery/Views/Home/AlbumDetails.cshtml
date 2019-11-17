@@ -1,0 +1,11 @@
+﻿@model  UserGallery.Models.UserViewModel
+@{
+    ViewBag.Title = "AlbumDetails";
+}
+
+<h4>Album Details</h4>
+<div style="height:180px">
+    <img alt="@Model.Title" src="@Model.ThumbnailUrl" />
+</div>
+   <p>@Html.DisplayName(Model.Title)</p>
+

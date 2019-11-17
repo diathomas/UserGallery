@@ -1,0 +1,95 @@
+﻿@model IEnumerable<UserGallery.Models.UserViewModel>
+@{
+    var usersGrid = new WebGrid(source: Model,rowsPerPage: 3);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SearchUser</title>
+    
+    <style type="text/css">
+        .thumbnail{width :80px}
+        .title {width: 180px}
+        .phone{width:180px}
+        .name{width:100px}
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+            .Grid th {
+                background-color: #F7F7F7;
+                font-weight: bold;
+            }
+
+            .Grid th, .Grid td {
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+
+            .Grid, .Grid table td {
+                border: 0px solid #ccc;
+            }
+
+            .Grid th a, .Grid th a:visited {
+                    color: #333;
+                }
+    </style>
+</head>
+<body>
+    <script>
+        function SearchDetails()
+        {
+           // alert(document.getElementById('txtUsername').value);
+            var url = '@Url.Action("Index", "Home")';
+            url += '?title=' + document.getElementById('txtTitle').value + '&name=' + document.getElementById('txtUsername').value;                                 
+            window.location.href = url;
+           }
+        
+  
+           
+    </script>
+    <div class="row" style="height:50px">
+
+    </div>
+    <div class="row" style="height:100px">
+        <div class="col-md-4">
+            <span>User Name:</span>
+            <input type="text" id="txtUsername" name="txtUsername" />
+        </div>
+        <div class="col-md-4">
+            <span>Title:</span>
+            <input type="text" id="txtTitle" name="txtTitle" />
+        </div>
+        <div class="col-md-4">
+            <input type="button" value="Search" onclick="SearchDetails()" />
+        </div>
+    </div> 
+    <div id="gridContent">
+
+        @usersGrid.GetHtml(
+         htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+         tableStyle: "grid",
+         headerStyle: "head",
+         alternatingRowStyle: "alt",
+         columns: usersGrid.Columns(
+                          usersGrid.Column("Thumbnail",format:@<text><img alt="@item.Title" src="@Url.Content(item.ThumbnailUrl)" /></text>,style:"thumbnail"),
+                             usersGrid.Column("Title", format: (item) => Html.ActionLink((string)item.Title, "AlbumDetails", new { id = item.Id }),style:"title"),
+                             usersGrid.Column("Name", format: (item) => Html.ActionLink((string)item.Name, "UserDetails", new { id = item.Id }),style:"name"),
+                             usersGrid.Column("Email"),
+                             usersGrid.Column("Phone",style:"phone"),
+                             usersGrid.Column("Address", format: (item) => Html.DisplayName(((string)(item.Address.Street + "," + item.Address.Suite + "," + item.Address.City + "," + item.Address.Zipcode))))
+                             ))
+    </div>
+</body>
+</html>
+    
+
